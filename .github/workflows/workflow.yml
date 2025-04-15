@@ -1,0 +1,26 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main   # This triggers the action on a push to the 'main' branch
+      - '**'   # This triggers the action on pushes to any branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # The runner environment used for the job
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2  # This action checks out your repository
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2  # This action sets up Java environment
+        with:
+          java-version: '11'  # Specify the Java version required for the project
+
+      - name: Build with Gradle
+        run: ./gradlew assemble  # Run Gradle build task
+
+      - name: Run Tests
+        run: ./gradlew test  # Run Gradle test task
